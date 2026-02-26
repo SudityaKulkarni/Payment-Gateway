@@ -1,3 +1,5 @@
+"""Payment routes and processing engine for the payment gateway"""
+
 from __future__ import annotations
 
 import logging
@@ -26,7 +28,9 @@ MAX_RETRY_ATTEMPTS = 3
 WEBHOOK_TIMEOUT_SECONDS = 3.0
 
 
-router = APIRouter(prefix="/payments", tags=["Payments"])
+router = APIRouter(
+	prefix="/payments", 
+	tags=["Payments"])
 
 
 @dataclass
@@ -315,7 +319,7 @@ def process_payment(
 ):
 	payment = _get_payment_for_user(db, payment_id, current_user)
 	if payment.status in (models.PaymentStatus.SUCCESS, models.PaymentStatus.REFUNDED):
-		raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Payment is already finalized")
+		raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Payment has already been finalized.")
 	_run_payment_engine(db, payment, trigger="manual")
 	db.commit()
 	db.refresh(payment)
@@ -330,9 +334,9 @@ def retry_payment(
 ):
 	payment = _get_payment_for_user(db, payment_id, current_user)
 	if payment.status != models.PaymentStatus.FAILED:
-		raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Only failed payments can be retried")
+		raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Only failed payments can be retried.")
 	if payment.retry_count >= MAX_RETRY_ATTEMPTS:
-		raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Retry limit reached for this payment")
+		raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Retry limit reached for this payment.")
 	payment.retry_count += 1
 	_run_payment_engine(db, payment, trigger="retry")
 	db.commit()
@@ -348,7 +352,7 @@ def refund_payment(
 ):
 	payment = _get_payment_for_user(db, payment_id, current_user)
 	if payment.status != models.PaymentStatus.SUCCESS:
-		raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Only successful payments can be refunded")
+		raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Only successful payments can be refunded.")
 	_transition_payment_status(
 		db,
 		payment,
