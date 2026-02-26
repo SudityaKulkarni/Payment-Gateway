@@ -8,7 +8,7 @@ const STATUS_MAP = {
   PROCESSING: { color: "bg-yellow-100 text-yellow-700 border-yellow-200", dot: "bg-yellow-500" },
   SUCCESS: { color: "bg-green-100 text-green-700 border-green-200", dot: "bg-green-500" },
   FAILED: { color: "bg-red-100 text-red-700 border-red-200", dot: "bg-red-500" },
-  REFUNDED: { color: "bg-purple-100 text-purple-700 border-purple-200", dot: "bg-purple-500" },
+  REFUNDED: { color: "bg-olive-100 text-olive-700 border-olive-200", dot: "bg-olive-500" },
 };
 
 const CURRENCIES = ["USD", "EUR", "GBP", "INR", "JPY", "AUD"];
@@ -191,12 +191,12 @@ export default function Dashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
-              <div className="bg-indigo-600 p-1.5 rounded-lg shadow-indigo-200 shadow-lg">
+              <div className="bg-olive-600 p-1.5 rounded-lg shadow-olive-200 shadow-lg">
                 <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
-              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-olive-600 to-olive-700">
                 PayGateway
               </span>
             </div>
@@ -212,7 +212,7 @@ export default function Dashboard() {
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
                   className={`flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${activeTab === tab.id
-                    ? "bg-indigo-50 text-indigo-700"
+                    ? "bg-olive-50 text-olive-700"
                     : "text-gray-500 hover:text-gray-700 hover:bg-gray-100"
                     }`}
                 >
@@ -227,7 +227,7 @@ export default function Dashboard() {
             <div className="flex items-center gap-4">
               <button
                 onClick={logout}
-                className="text-sm font-semibold text-gray-600 hover:text-indigo-600 transition-colors"
+                className="text-sm font-semibold text-gray-600 hover:text-olive-600 transition-colors"
               >
                 Sign Out
               </button>
@@ -256,7 +256,7 @@ export default function Dashboard() {
           <div className="bg-white shadow-sm border border-gray-200 rounded-xl overflow-hidden">
             <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
               <h2 className="text-sm font-bold text-gray-700 uppercase tracking-wider">All Payments</h2>
-              <button onClick={fetchPayments} className="text-indigo-600 hover:text-indigo-800 text-sm font-semibold">
+              <button onClick={fetchPayments} className="text-olive-600 hover:text-olive-800 text-sm font-semibold">
                 Refresh
               </button>
             </div>
@@ -264,7 +264,7 @@ export default function Dashboard() {
             <div className="overflow-x-auto">
               {loading ? (
                 <div className="py-20 flex justify-center">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-olive-600"></div>
                 </div>
               ) : payments.length === 0 ? (
                 <div className="py-20 text-center">
@@ -277,7 +277,7 @@ export default function Dashboard() {
                   <p className="text-gray-500 mt-1">Get started by creating your first simulated payment.</p>
                   <button
                     onClick={() => setActiveTab("create")}
-                    className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
+                    className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-olive-600 hover:bg-olive-700"
                   >
                     Create Payment
                   </button>
@@ -316,7 +316,7 @@ export default function Dashboard() {
                             {p.status === "CREATED" && (
                               <button
                                 onClick={() => doAction(p.id, "process", "Processing")}
-                                className="text-indigo-600 hover:text-indigo-900 bg-indigo-50 px-3 py-1 rounded-md"
+                                className="text-olive-600 hover:text-olive-900 bg-olive-50 px-3 py-1 rounded-md"
                                 disabled={actionLoading[`${p.id}-process`]}
                               >
                                 {actionLoading[`${p.id}-process`] ? "..." : "Process"}
@@ -334,7 +334,7 @@ export default function Dashboard() {
                             {p.status === "SUCCESS" && (
                               <button
                                 onClick={() => doAction(p.id, "refund", "Refunding")}
-                                className="text-purple-600 hover:text-purple-900 bg-purple-50 px-3 py-1 rounded-md"
+                                className="text-olive-700 hover:text-olive-900 bg-olive-50 px-3 py-1 rounded-md"
                                 disabled={actionLoading[`${p.id}-refund`]}
                               >
                                 {actionLoading[`${p.id}-refund`] ? "..." : "Refund"}
@@ -371,7 +371,7 @@ export default function Dashboard() {
                         type="number"
                         step="0.01"
                         required
-                        className="block w-full pl-7 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                        className="block w-full pl-7 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-olive-500 focus:border-olive-500 text-sm"
                         placeholder="0.00"
                         value={form.amount}
                         onChange={(e) => setForm({ ...form, amount: e.target.value })}
@@ -381,7 +381,7 @@ export default function Dashboard() {
                   <div>
                     <label className="block text-sm font-semibold text-gray-700 mb-1">Currency</label>
                     <select
-                      className="block w-full pl-3 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                      className="block w-full pl-3 pr-10 py-2 border border-gray-300 rounded-lg focus:ring-olive-500 focus:border-olive-500 text-sm"
                       value={form.currency}
                       onChange={(e) => setForm({ ...form, currency: e.target.value })}
                     >
@@ -395,7 +395,7 @@ export default function Dashboard() {
                   <input
                     type="text"
                     required
-                    className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                    className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-olive-500 focus:border-olive-500 text-sm"
                     placeholder="INV-2024-001"
                     value={form.payment_reference}
                     onChange={(e) => setForm({ ...form, payment_reference: e.target.value })}
@@ -407,7 +407,7 @@ export default function Dashboard() {
                     <label className="block text-sm font-semibold text-gray-700 mb-1">Customer Email</label>
                     <input
                       type="email"
-                      className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                      className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-olive-500 focus:border-olive-500 text-sm"
                       placeholder="client@example.com"
                       value={form.customer_email}
                       onChange={(e) => setForm({ ...form, customer_email: e.target.value })}
@@ -417,7 +417,7 @@ export default function Dashboard() {
                     <label className="block text-sm font-semibold text-gray-700 mb-1">Webhook URL (Optional)</label>
                     <input
                       type="url"
-                      className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                      className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-olive-500 focus:border-olive-500 text-sm"
                       placeholder="https://hooks.example.com/pay"
                       value={form.webhook_url}
                       onChange={(e) => setForm({ ...form, webhook_url: e.target.value })}
@@ -429,7 +429,7 @@ export default function Dashboard() {
                   <label className="block text-sm font-semibold text-gray-700 mb-1">Description</label>
                   <textarea
                     rows={2}
-                    className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+                    className="block w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-olive-500 focus:border-olive-500 text-sm"
                     placeholder="Payment for services rendered..."
                     value={form.description}
                     onChange={(e) => setForm({ ...form, description: e.target.value })}
@@ -448,7 +448,7 @@ export default function Dashboard() {
                 <button
                   type="submit"
                   disabled={creating}
-                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all disabled:opacity-50"
+                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-olive-600 hover:bg-olive-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-olive-500 transition-all disabled:opacity-50"
                 >
                   {creating ? "Creating..." : "Register Initial Transaction"}
                 </button>
@@ -463,7 +463,7 @@ export default function Dashboard() {
             <div className="bg-white p-6 shadow-sm border border-gray-200 rounded-xl flex gap-3">
               <input
                 type="text"
-                className="flex-1 block w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm font-mono"
+                className="flex-1 block w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-olive-500 focus:border-olive-500 sm:text-sm font-mono"
                 placeholder="Paste Payment ID or Reference (e.g. INV-2024-001)"
                 value={checkId}
                 onChange={(e) => setCheckId(e.target.value)}
@@ -472,7 +472,7 @@ export default function Dashboard() {
               <button
                 onClick={checkStatus}
                 disabled={checking}
-                className="inline-flex items-center px-6 py-2 border border-transparent text-sm font-bold rounded-xl shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 active:scale-95 transition-all"
+                className="inline-flex items-center px-6 py-2 border border-transparent text-sm font-bold rounded-xl shadow-sm text-white bg-olive-600 hover:bg-olive-700 active:scale-95 transition-all"
               >
                 {checking ? "Searching..." : "Lookup"}
               </button>
@@ -488,7 +488,7 @@ export default function Dashboard() {
                   </div>
                   <div className="flex flex-col items-end gap-2">
                     <StatusBadge status={checkedPayment.status} />
-                    <span className="text-2xl font-black text-indigo-600">
+                    <span className="text-2xl font-black text-olive-600">
                       {formatCurrency(checkedPayment.amount, checkedPayment.currency)}
                     </span>
                   </div>
@@ -516,7 +516,7 @@ export default function Dashboard() {
                     {checkedPayment.events?.map((ev, i) => (
                       <div key={ev.id || i} className="flex items-center text-sm">
                         <div className="relative flex items-center h-full mr-4">
-                          <div className={`w-2 h-2 rounded-full ${i === 0 ? "bg-indigo-500" : "bg-gray-300"}`}></div>
+                          <div className={`w-2 h-2 rounded-full ${i === 0 ? "bg-olive-500" : "bg-gray-300"}`}></div>
                           {i !== checkedPayment.events.length - 1 && <div className="absolute top-2 left-1 -ml-px h-10 w-0.5 bg-gray-100"></div>}
                         </div>
                         <div className="bg-gray-50 rounded-lg p-3 flex-1 flex flex-wrap gap-2 items-center">
@@ -539,7 +539,7 @@ export default function Dashboard() {
           <div className="space-y-8">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
-                { label: "Total Volume", value: summary?.total || 0, icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6", color: "text-indigo-600", bg: "bg-indigo-100" },
+                { label: "Total Volume", value: summary?.total || 0, icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6", color: "text-olive-600", bg: "bg-olive-100" },
                 { label: "Success Rate", value: summary?.total ? `${Math.round((summary.success / summary.total) * 100)}%` : "0%", icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z", color: "text-emerald-600", bg: "bg-emerald-100" },
                 { label: "Failed Transfers", value: summary?.failed || 0, icon: "M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z", color: "text-rose-600", bg: "bg-rose-100" },
               ].map((stat, i) => (
@@ -560,14 +560,14 @@ export default function Dashboard() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
                 <h3 className="text-lg font-bold text-gray-900 mb-6 flex items-center">
-                  <span className="h-2 w-2 bg-indigo-600 rounded-full mr-2"></span>
+                  <span className="h-2 w-2 bg-olive-600 rounded-full mr-2"></span>
                   Status Breakdown
                 </h3>
                 <div className="space-y-4">
                   {summary ? Object.entries({
                     Success: { val: summary.success, col: "bg-emerald-500" },
                     Failed: { val: summary.failed, col: "bg-rose-500" },
-                    Refunded: { val: summary.refunded, col: "bg-purple-500" },
+                    Refunded: { val: summary.refunded, col: "bg-olive-500" },
                     Processing: { val: summary.processing, col: "bg-amber-500" },
                   }).map(([label, { val, col }]) => (
                     <div key={label}>
