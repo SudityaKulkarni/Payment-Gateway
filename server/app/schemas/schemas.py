@@ -106,7 +106,7 @@ class PaymentRead(PaymentBase):
 	failure_reason: Optional[str] = None
 	rule_triggered: Optional[str] = None
 	retry_count: int
-	fraud_flag: bool
+	fraud_flag: Optional[bool] = Field(default=False)
 	extra_data: Optional[Dict[str, Any]] = None
 	processing_started_at: Optional[datetime] = None
 	completed_at: Optional[datetime] = None
