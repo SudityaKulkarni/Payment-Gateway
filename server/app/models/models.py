@@ -46,6 +46,8 @@ class Payment(Base):
 	amount = Column(Numeric(12, 2), nullable=False)
 	currency = Column(String(3), nullable=False, default="USD")
 	description = Column(Text, nullable=True)
+	extra_data = Column(JSON, nullable=True)
+	webhook_url = Column(String(255), nullable=True)
 	status = Column(
 		Enum(PaymentStatus, native_enum=False, length=20),
 		nullable=False,
@@ -74,6 +76,23 @@ class Payment(Base):
 		onupdate=func.now(),
 		nullable=False,
 	)
+
+
+	@property
+	def fraud_flag(self):
+		"""Expose the fraud flag stored within the JSON `extra_data`."""
+		if isinstance(self.extra_data, dict):
+			return self.extra_data.get("fraud_flag")
+		return None
+
+	@fraud_flag.setter
+	def fraud_flag(self, value):
+		payload = dict(self.extra_data or {})
+		if value is None:
+			payload.pop("fraud_flag", None)
+		else:
+			payload["fraud_flag"] = bool(value)
+		self.extra_data = payload or None
 
 	events = relationship(
 		"PaymentEvent",

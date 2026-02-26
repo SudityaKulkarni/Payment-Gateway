@@ -2,6 +2,7 @@ from fastapi import FastAPI
 
 from . import models
 from .db.database import engine
+from .routes import payments as payment_routes
 from .routes import users as user_routes
 
 app = FastAPI()
@@ -9,6 +10,7 @@ app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
 
 app.include_router(user_routes.router)
+app.include_router(payment_routes.router)
 
 
 @app.get("/")

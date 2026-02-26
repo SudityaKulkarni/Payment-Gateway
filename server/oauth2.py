@@ -2,16 +2,17 @@ import os
 from datetime import datetime, timedelta
 
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
+
 
 from app import models
 from app.db.database import get_db
 from app.schemas import schemas
 
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/users/login")
+oauth2_scheme = HTTPBearer(auto_error=True)
 
 SECRET_KEY = os.getenv("SECRET_KEY", "change-me-in-prod")
 ALGORITHM = os.getenv("ALGORITHM", "HS256")
@@ -39,7 +40,7 @@ def verify_access_token(token: str, credentials_exception: HTTPException) -> sch
 
 
 def get_current_user(
-    token: str = Depends(oauth2_scheme),
+    credentials: HTTPAuthorizationCredentials = Depends(oauth2_scheme),
     db: Session = Depends(get_db),
 ):
     """FastAPI dependency returning the authenticated `User` model."""
@@ -48,7 +49,7 @@ def get_current_user(
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    parsed_token = verify_access_token(token, credentials_exception)
+    parsed_token = verify_access_token(credentials.credentials, credentials_exception)
     user = db.query(models.User).filter(models.User.id == parsed_token.id).first()
     if user is None:
         raise credentials_exception
