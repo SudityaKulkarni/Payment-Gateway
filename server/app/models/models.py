@@ -135,6 +135,7 @@ class User(Base):
 	preferred_currency = Column(String(3), nullable=False, default="USD")
 	bank_name = Column(String(255), nullable=True)
 	bank_account_number = Column(String(64), nullable=True)
+	bank_routing_number = Column(String(64), nullable=True)
 	card_last_four = Column(String(4), nullable=True)
 	available_balance = Column(Numeric(14, 2), nullable=False, default=0)
 	is_active = Column(Boolean, nullable=False, default=True)

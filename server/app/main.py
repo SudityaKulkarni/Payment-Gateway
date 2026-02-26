@@ -1,16 +1,20 @@
-from fastapi import FastAPI,Response,status,HTTPException,Depends
-from . import schemas,models
-from .db.database import engine,SessionLocal,get_db,Base
-from sqlalchemy.orm import Session
+from fastapi import FastAPI
+
+from . import models
+from .db.database import engine
+from .routes import users as user_routes
 
 app = FastAPI()
 
 models.Base.metadata.create_all(bind=engine)
 
+app.include_router(user_routes.router)
+
+
 @app.get("/")
 def root():
     return {"message": "hello world"}
 
-@app.get("/sqlalchemy")
-def test_posts(db: Session = Depends(get_db)):
-    return {"message": "successfully connected to database"}
+@app.get("/health")
+def healthcheck():
+	return {"status": "ok"}

@@ -15,6 +15,15 @@ CurrencyType = Literal["USD", "EUR", "GBP", "INR", "JPY", "AUD"]
 PasswordType = constr(strip_whitespace=True, min_length=8, max_length=128)
 
 
+class Token(BaseModel):
+	access_token: str
+	token_type: str = "bearer"
+
+
+class TokenData(BaseModel):
+	id: Optional[str] = None
+
+
 class UserBase(BaseModel):
 	email: EmailStr
 	full_name: Optional[str] = None
@@ -28,6 +37,18 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
 	password: PasswordType
+
+
+class UserUpdate(BaseModel):
+	email: Optional[EmailStr] = None
+	full_name: Optional[str] = None
+	preferred_currency: Optional[CurrencyType] = None
+	bank_name: Optional[str] = None
+	bank_account_number: Optional[constr(strip_whitespace=True, min_length=4, max_length=64)] = None
+	bank_routing_number: Optional[constr(strip_whitespace=True, min_length=4, max_length=64)] = None
+	card_last_four: Optional[constr(strip_whitespace=True, min_length=4, max_length=4)] = None
+	available_balance: Optional[BalanceType] = None
+	password: Optional[PasswordType] = None
 
 
 class UserLogin(BaseModel):
